@@ -1,11 +1,61 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
+<style>
+    .btnconfig {
+        float: right;
+        margin-top: 5px;
+    }
+</style>
 <div class="text-center">
-    <h1 class="display-4">Welcome to Fcm application....</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h3 class="display-8">Cloud Message Sender with .Net Core !</h3>
 </div>
 
 
+<form onsubmit="/Home/Send" method="post"> 
+    <div class="form-group">
+        <label for="exampleFormControlInput1">API Key</label>
+        <textarea class="form-control " id="apikey" rows="2" readonly="readonly"></textarea>
+        <label for="exampleFormControlInput1">Device Token</label>
+        <textarea class="form-control" id="token" rows="2" readonly="readonly"></textarea>
+        <hr />
+    </div>
+    <div class="form-group">
+        <label for="exampleFormControlSelect1">Notification Message</label>
+        <textarea class="form-control" id="token" rows="2" placeholder="Type text here"></textarea>
+    </div>
 
+    <div class="form-group">
+        <button class="btn btn-success">Send</button>
+        <label>@ViewBag.Message</label>
+    </div>
+    <div class="form-group">
+        <ul>
+            <li>Click on API Key text box to edit and update</li>
+            <li>Click on Device Token  text box to edit and update</li>
+            <li>Keys will be stored in your browser memory</li>
+            <li>If you want to send message to all users then leave device token empty</li>
+        </ul>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("#apikey").val($.cookie('cookie_apikey')); 
+        $("#token").val($.cookie('cookie_token'))
+    })
+    $("#apikey").click(function () {
+        $("#apikey").removeAttr("readonly");
+    })
+    $("#apikey").blur(function () {
+        $("#apikey").attr("readonly", "readonly");
+        $.cookie('cookie_apikey', $("#apikey").val());
+    })
+    $("#token").click(function () {
+        $("#token").removeAttr("readonly");
+    })
+    $("#token").blur(function () {
+        $("#token").attr("readonly", "readonly");
+        $.cookie('cookie_token', $("#token").val());
+    })
+</script>
